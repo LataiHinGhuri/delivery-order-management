@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <menuitem id='menu_delivery_order_management' name='Delivery Order'   web_icon="delivery_order_management,static/description/icon.png"/>
+        <!-- tree view -->
+        <record id="view_configuration_tree" model="ir.ui.view">
+            <field name="name">del.order.tree</field>
+            <field name="model">del.order</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Configuration" >
+                    <field name="delivery_project_name" />
+                    <field name="delivery_stage_name" />
+                    <field name="config_state" />
+                </tree>
+            </field>
+        </record>
+
+       
+        <!-- Form view -->
+        <record id="view_configuration_form" model="ir.ui.view">
+            <field name="name">del.order.form</field>
+            <field name="model">del.order</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Configuration">
+                    
+                    <sheet>
+                    
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h3><b>Select Project and Stage for Delivery Order Management</b></h3>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr><td><br/></td></tr>
+                                <tr>
+                                    <td>
+                                        <group>
+                                            <field name="selected_project"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <group>
+                                            <field name="selected_stage"/>
+                                        </group>                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <group>
+                                            <field name="last_stage"/>
+                                        </group>                                    
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr><td><br/></td></tr>
+                            </table>
+                        </group>
+                        <footer>
+                            <button string="Save Configuration" type="object" name="button_action" class="oe_highlight"/>
+                        </footer>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        
+        <!-- This action window for configuration -->
+
+        <record model="ir.actions.act_window" id="action_view_configuraton">
+            <field name="name">Configuration</field>
+            <field name="res_model">del.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create new Configuration
+                </p>
+            </field>
+        </record>
+
+        <!-- This action window to show project task from project module -->
+        
+
+
+        <!-- Extra codeeeeeeeeeeeeeeeeeeeeeeeee -->
+        <record id="activate_sample_project" model="ir.actions.server">
+            <field name="name">Activate Sample Project</field>
+            <field name="model_id" ref="delivery_order_management.model_set_view"/>
+            <field name="code">
+                action = model.activate_project_view()
+            </field>
+        </record>
+
+        
+
+        <menuitem id='sub1_delivery_order_management' name="Delivery Order Task" parent="menu_delivery_order_management" action="activate_sample_project"/>
+
+        <menuitem id='sub2_delivery_order_management' name="Configuration" 
+                     parent="menu_delivery_order_management" action="action_view_configuraton"/>
+        
+
+        
+    </data>
+</odoo>
+
